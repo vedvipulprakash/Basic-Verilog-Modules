@@ -1,0 +1,40 @@
+module MUX_4x1(S,I,O);
+input [1:0]S;
+input [3:0]I;
+output reg O;
+always@(S,I) begin
+case({S})
+2'b00 : O=I[0];
+2'b01 : O=I[1];
+2'b10 : O=I[2];
+2'b11 : O=I[3];
+default : O=1'b0;
+endcase
+end
+endmodule
+
+
+
+
+
+//test bench
+
+// Code your testbench here
+// or browse Examples
+module MUX_TB();
+reg [3:0]I;
+reg [1:0]S;
+wire O;
+MUX_4x1 mux(S,I,O);
+initial begin
+$monitor("S1=%b|S0=%b|I3=%b|I2=%b|I1=%b|I0=%b|O=%b",S[1],S[0],I[3],I[2],
+I[1],I[0],O);
+I=4'b1011;
+#5 S=2'b00;
+#5 S=2'b10;
+#5 I=4'b0100;
+#5 S=2'b11;
+#5 S=2'b01;
+#5 $finish;
+end
+endmodule
