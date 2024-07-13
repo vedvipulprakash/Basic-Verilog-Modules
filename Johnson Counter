@@ -1,0 +1,64 @@
+// Code your design herem
+module johnson_counter(clk,rst,out);
+  output reg [3:0]out;
+  input clk;
+  input rst;
+  
+  always @(posedge clk,posedge rst)
+  begin
+    if(rst)
+      out<=4'd0;
+    else
+      out<={~out[0],out[3:1]};
+  end
+endmodule
+
+
+
+// Code your testbench here
+// or browse Examples
+module tb();
+  reg clk;
+  reg rst;
+  wire [3:0] out;
+  
+  
+  
+  johnson_counter dut(.clk(clk),.rst(rst),.out(out));
+   
+  
+  initial 
+    begin
+      clk=0;
+      forever #5 clk=~clk;
+    end
+  
+  initial 
+    begin
+      rst=0;
+      
+      #10;
+    end
+  
+  initial 
+    begin
+      rst=1;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=0;#10;
+      rst=1;#10;
+      
+    end
+      
+  
+  initial 
+    begin
+      $monitor($time," rst=%b , clk=%b , out=%b",rst,clk,out);
+      #200 $finish;
+    end
+  
+endmodule
